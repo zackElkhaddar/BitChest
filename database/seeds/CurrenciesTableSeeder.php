@@ -14,39 +14,39 @@ class CurrenciesTableSeeder extends Seeder
         //
         DB::Table('currencies')->insert(array([
             'name' => 'Bitcoin',
-            'symbol' => 'BC',
+            'symbol' => 'BTC',
         ],
             [
                 'money_name' => 'Ethereum',
-                'symbol' => 'Eth',
+                'symbol' => 'ETH',
             ],
             [
                 'money_name' => 'Ripple',
-                'symbol' => 'R',
+                'symbol' => 'XRP',
             ],
             [
                 'money_name' => 'Bitcoin Cash',
-                'symbol' => 'BC-C',
+                'symbol' => 'BCH',
             ],
             [
                 'money_name' => 'Cardano',
-                'symbol' => 'C',
+                'symbol' => 'ADA',
             ],
             [
                 'money_name' => 'Litecoin',
-                'symbol' => 'LC',
+                'symbol' => 'LTC',
             ],
             [
                 'money_name' => 'NEM',
-                'symbol' => 'NEM',
+                'symbol' => 'XEM',
             ],
             [
                 'money_name' => 'Stellar',
-                'symbol' => 'S',
+                'symbol' => 'XLM',
             ],
             [
                 'money_name' => 'IOTA',
-                'symbol' => 'IOTA',
+                'symbol' => 'MIOTA',
             ],
             [
                 'money_name' => 'DASH',

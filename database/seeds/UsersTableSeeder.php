@@ -18,19 +18,19 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Jerome',
                 'email' => 'jerome@bitchest.fr',
                 'password' => Hash::make('jerome'),
-                'is_admin' => rand(0, 1)
+                'is_admin' => 1
             ],
             [
                 'name' => 'Admin',
                 'email' => 'admin@admin.fr',
                 'password' => Hash::make('admin'),
-                'is_admin' => rand(0, 1)
+                'is_admin' => 0
             ],
             [
                 'name' => 'Zakaria',
                 'email' => 'zakaria@test.fr',
                 'password' => Hash::make('zakaria'),
-                'is_admin' => rand(0, 1)
+                'is_admin' => 0
             ]));
     }
 }

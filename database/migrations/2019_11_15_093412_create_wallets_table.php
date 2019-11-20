@@ -17,6 +17,7 @@ class CreateWalletsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('currency_id');
+            $table->unsignedInteger('credit');
             $table->timestamps();
         });
 

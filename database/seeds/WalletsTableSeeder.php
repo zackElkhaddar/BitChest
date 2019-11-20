@@ -13,44 +13,29 @@ class WalletsTableSeeder extends Seeder
     {
         //
         DB::Table('wallets')->insert(array([
-            'user_id' => rand(1, 3),
+            'user_id' => 1,
             'currency_id' => rand(1, 10),
-            
+            'credit' => rand(1,2000),
         ],
         [
-            'user_id' => rand(1, 3),
+            'user_id' => 2,
             'currency_id' => rand(1, 10),
-            
+            'credit' => rand(1,2000),
         ],
         [
-            'user_id' => rand(1, 3),
+            'user_id' => 3,
             'currency_id' => rand(1, 10),
-            
+            'credit' => rand(1,2000),
         ],
         [                            
-            'user_id' => rand(1, 3),
+            'user_id' => 5,
             'currency_id' => rand(1, 10),
-            
-        ],
-        [
-            'user_id' => rand(1, 3),
-            'currency_id' => rand(1, 10),
-            
-        ],
-        [
-            'user_id' => rand(1, 3),
-            'currency_id' => rand(1, 10),
-            
-        ],
-        [                           
-            'user_id' => rand(1, 3),
-            'currency_id' => rand(1, 10),
-            
+            'credit' => rand(1,2000),
         ],
         [                            
-            'user_id' => rand(1, 3),
+            'user_id' => 6,
             'currency_id' => rand(1, 10),
-            
+            'credit' => rand(1,2000),
         ]));
 
     }
