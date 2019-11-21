@@ -93,10 +93,98 @@ class HomeController extends Controller
 
     public function profile()
     {
-       // $arrs = $this->transfer('422,72',true);
-        $users = User::all();
-        return view('admin.profile',compact('users','arrs'));
+        $users = User::where('id', Auth::id())->get();
+        //$users = User::all();
+        return view('admin.profile',compact('users'));
     }
+
+    public function storeAdminProfile(Request $request)
+    {
+        //
+        // validate
+        $rules = array(
+            'name'       => 'required',
+            'email'      => 'required|email',
+            'is_admin' => 'required|numeric'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('profile/create')
+                ->withErrors($validator)
+                ->withInput(Input::except('password'));
+        } else {
+            // store
+            $user = new User;
+
+            $user->name=$request->input('name');
+            $user->email=$request->input('email');
+            $user->is_admin=$request->input('is_admin');
+            $user->save();
+
+            // redirect
+            Session::flash('message', 'Successfully created user!');
+            return Redirect::to('profile');
+        }
+    }
+
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function editAdminProfile($id)
+    {
+        //
+        // get the user
+        $user = User::find($id);
+
+        // show the edit form and pass the user
+        return view('admin.editAdminProfile',compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateAdminProfile(Request $request, $id)
+    {
+        //
+        // validate
+        
+        $rules = array(
+            'name'       => 'required',
+            'email'      => 'required|email',
+            'is_admin' => 'required|numeric'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('profile/' . $id . '/edit')
+                ->withErrors($validator)
+                ->withInput(Input::except('password'));
+        } else {
+            // store
+            $user = User::find($id);
+            $user->name=$request->input('name');
+            $user->email=$request->input('email');
+            $user->is_admin=$request->input('is_admin');
+            $user->save();
+
+            // redirect
+            Session::flash('message', 'Successfully updated user!');
+            return Redirect::to('profile');
+        }
+        
+    }
+
 
     //Function for Admin controller to manage users 
     public function usermanage()
@@ -119,7 +207,22 @@ class HomeController extends Controller
     }
 
     public function homeclient()
-    {   $cryptos = Currency::all();
-        return view('customer.homeClient',compact('cryptos'));
+    {   
+        
+        $amounts = $this->getRate('ETH');
+        $cryptos = DB::table('currencies')
+        ->select('currencies.id','currencies.name','currencies.symbol')
+        ->get();
+        return view('customer.homeClient',compact('cryptos','amounts'));
+    }
+
+    public function homeadmin()
+    {   
+        
+        $amounts = $this->getRate('ETH');
+        $cryptos = DB::table('currencies')
+        ->select('currencies.id','currencies.name','currencies.symbol')
+        ->get();
+        return view('admin.homeAdmin',compact('cryptos','amounts'));
     }
 }

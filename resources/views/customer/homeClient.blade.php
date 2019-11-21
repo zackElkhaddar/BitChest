@@ -1,26 +1,86 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="wrapper">
 
-<!DOCTYPE html>
-<html>
+    <!-- Sidebar -->
+    <nav id="sidebar">
+    <div class="sidebar-header">
+            <h3 class="title-sidebar">BitChest</h3>
+        </div>
+
+        <ul class="list-unstyled components">
+            @if (!Auth::guest() && Auth::user()->is_admin)
+                <p class="user-status">Administrateur</p>
+            @else
+                <p class="user-status">Client</p>
+            @endif
+            <li class="active">
+            @if (!Auth::guest() && Auth::user()->is_admin)
+                <a class="nav-link" style="color: #003366;" href="#">Home</a>
+            @else
+                <a class="nav-link" style="color: #003366;" href="#">HomeClient</a>
+            @endif
+            </li>
+            <li>
+                <a class="nav-link" style="color: #003366;" href="#">My profile</a>
+            </li>
+            <li>
+            @if (!Auth::guest() && Auth::user()->is_admin)
+                <a class="nav-link" style="color: #003366;" href="#">User Manage</a>
+            @else
+                <a class="nav-link" style="color: #003366;" href="#">My wallet</a>
+            @endif
+            </li>
+            <li>
+            <a class="nav-link" style="color: #003366;" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                            Déconnexion
+                                        </a>
+
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+            </li>
+        </ul>
+    </nav>
+</div> 
+@if (!Auth::guest() && Auth::user()->is_admin)
+<!-- <div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">BitChest</div>
+                <div class="panel-body"> -->
+                    @if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                 <!--    <p>Evolution of cryptocurrency over 30 days</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
 <head>
     <title>Welcome to BitChest</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
 <body>
 <div class="container">
-<nav class="navbar navbar-inverse">
+<nav class="navbar navbar-inverse" style="height:88px">
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">User Alert</a>
+        <a class="navbar-brand" href="#">Cryptos Alert</a>
     </div>
     <ul class="nav navbar-nav">
-        <li><a href="#">View All Users</a></li>
-        <li><a href="#">Create a User</a>
+        <li><a href="#">View All Cryptos</a></li>
+        <li><a href="#">Consult a crypto</a>
     </ul>
 </nav>
 
-<h1>All the Users</h1>
+<h2>All Cryptos coins and rates for buying and selling</h2>
 
 <!-- will be used to show any messages -->
 @if (Session::has('message'))
@@ -32,31 +92,19 @@
         <tr>
             <td>ID</td>
             <td>Name</td>
-            <td>Email</td>
-            <td>Status Level</td>
+            <td>Rate</td>
             <td>Actions</td>
         </tr>
     </thead>
     <tbody>
-    @foreach($users as $key => $value)
+    @foreach($cryptos as $key => $value)
         <tr>
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
-            <td>{{ $value->email }}</td>
-            <td>{{ $value->is_admin }}</td>
-
-            <!-- we will also add show, edit, and delete buttons -->
+            <td>{{ App\Http\Controllers\HomeController::getRate($value->symbol)}} €</td>
             <td>
-
-                <!-- delete the nerd (uses the destroy method DESTROY /nerds/{id} -->
-                <!-- we will add this later since its a little more complicated than the other two buttons -->
-
-                <!-- show the nerd (uses the show method found at GET /nerds/{id} -->
-                <a class="btn btn-small btn-success" href="#">Show this user</a>
-
-                <!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
-                <a class="btn btn-small btn-info" href="#">Edit this user</a>
-
+                <a class="btn btn-small btn-success" href="#">Buy this cryptos</a>
+                <a class="btn btn-small btn-info" href="#">Sell this cryptos</a>
             </td>
         </tr>
     @endforeach

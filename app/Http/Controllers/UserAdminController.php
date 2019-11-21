@@ -118,7 +118,7 @@ class UserAdminController extends Controller
     {
         //
         // validate
-        // read more on validation at http://laravel.com/docs/validation
+        
         $rules = array(
             'name'       => 'required',
             'email'      => 'required|email',
