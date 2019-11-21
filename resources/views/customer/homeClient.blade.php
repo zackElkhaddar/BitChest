@@ -17,19 +17,19 @@
             @endif
             <li class="active">
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="#">Home</a>
+                <a class="nav-link" style="color: #003366;" href="/homeAdmin">Home</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="#">HomeClient</a>
+                <a class="nav-link" style="color: #003366;" href="/homeClient">HomeClient</a>
             @endif
             </li>
             <li>
-                <a class="nav-link" style="color: #003366;" href="#">My profile</a>
+                <a class="nav-link" style="color: #003366;" href="/profile">My profile</a>
             </li>
             <li>
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="#">User Manage</a>
+                <a class="nav-link" style="color: #003366;" href="/userManage">User Manage</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="#">My wallet</a>
+                <a class="nav-link" style="color: #003366;" href="/wallet">My wallet</a>
             @endif
             </li>
             <li>
@@ -46,7 +46,7 @@
         </ul>
     </nav>
 </div> 
-@if (!Auth::guest() && Auth::user()->is_admin)
+
 <!-- <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -69,7 +69,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin-left:235px">
 <nav class="navbar navbar-inverse" style="height:88px">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">Cryptos Alert</a>
@@ -80,14 +80,14 @@
     </ul>
 </nav>
 
-<h2>All Cryptos coins and rates for buying and selling</h2>
+<h2 style="margin-left:3px">All Cryptos coins and rates for buying and selling</h2>
 
 <!-- will be used to show any messages -->
 @if (Session::has('message'))
     <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
 
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered"style="margin-left:3px"> 
     <thead>
         <tr>
             <td>ID</td>
@@ -103,8 +103,8 @@
             <td>{{ $value->name }}</td>
             <td>{{ App\Http\Controllers\HomeController::getRate($value->symbol)}} €</td>
             <td>
-                <a class="btn btn-small btn-success" href="#">Buy this cryptos</a>
-                <a class="btn btn-small btn-info" href="#">Sell this cryptos</a>
+                <a class="btn btn-small btn-success" href="/buyCryptos">Buy this cryptos</a>
+                <a class="btn btn-small btn-info" href="/sellCryptos">Sell this cryptos</a>
             </td>
         </tr>
     @endforeach
@@ -113,5 +113,5 @@
 
 </div>
 </body>
-</html>
+
 @endsection

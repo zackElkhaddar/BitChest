@@ -17,19 +17,19 @@
             @endif
             <li class="active">
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="#">Home</a>
+                <a class="nav-link" style="color: #003366;" href="/homeAdmin">Home</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="#">HomeClient</a>
+                <a class="nav-link" style="color: #003366;" href="/homeClient">HomeClient</a>
             @endif
             </li>
             <li>
-                <a class="nav-link" style="color: #003366;" href="#">My profile</a>
+                <a class="nav-link" style="color: #003366;" href="/profile">My profile</a>
             </li>
             <li>
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="#">User Manage</a>
+                <a class="nav-link" style="color: #003366;" href="/userManage">User Manage</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="#">My wallet</a>
+                <a class="nav-link" style="color: #003366;" href="/wallet">My wallet</a>
             @endif
             </li>
             <li>

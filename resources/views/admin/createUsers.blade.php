@@ -24,7 +24,7 @@
 <!-- if there are creation errors, they will show here -->
 
 
-{{ Form::open(array('url' => 'homeAdmin')) }}
+{{ Form::open(array('url' => 'userManage')) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Name') }}

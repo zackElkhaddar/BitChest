@@ -20,6 +20,27 @@ class UserClientController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function buyCryptos()
+    {
+        //
+         return view('customer.buyCryptos'); 
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function sellCryptos()
+    {
+        //
+         return view('customer.sellCryptos'); 
+    }
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

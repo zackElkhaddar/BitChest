@@ -51,6 +51,10 @@ class CurrenciesTableSeeder extends Seeder
             [
                 'money_name' => 'DASH',
                 'symbol' => 'DASH',
+            ],
+            [
+                'money_name' => 'EURO',
+                'symbol' => 'EUR',
             ]));
     }
 }

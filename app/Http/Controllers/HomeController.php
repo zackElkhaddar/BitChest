@@ -81,13 +81,17 @@ class HomeController extends Controller
     }
 
     public static function getRate($cryptoType){
+        if($cryptoType == 'EUR'){
+        return 1;}
+        else{
         $client = new Client(['base_uri' => 'http://api.coinlayer.com/']);  
-        $response = $client->request('GET', 'live?access_key=5fdc1ddbea21aeaa2d4ab674f2ed6e9e&target=EUR'); 
+        $response = $client->request('GET', 'live?access_key=ae4edf312c3f0f934c23c55551610efc&target=EUR'); 
         $body = $response->getBody();
         $content =$body->getContents();
         $arrs = json_decode($content,TRUE);
         $arrs = $arrs['rates'][$cryptoType];
         return $arrs;
+    }
         
     }
 
@@ -195,7 +199,6 @@ class HomeController extends Controller
 
     public function wallet()
     {   
-       // $cryptos = Currency::all();
         $amounts = $this->getRate('ETH');
         $cryptos = DB::table('wallets')
         ->join('users', 'users.id', '=', 'wallets.user_id')
@@ -212,6 +215,7 @@ class HomeController extends Controller
         $amounts = $this->getRate('ETH');
         $cryptos = DB::table('currencies')
         ->select('currencies.id','currencies.name','currencies.symbol')
+        ->where('currencies.symbol','!=','EUR')
         ->get();
         return view('customer.homeClient',compact('cryptos','amounts'));
     }

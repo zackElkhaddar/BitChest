@@ -17,19 +17,19 @@
             @endif
             <li class="active">
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="#">Home</a>
+                <a class="nav-link" style="color: #003366;" href="/homeAdmin">Home</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="#">HomeClient</a>
+                <a class="nav-link" style="color: #003366;" href="/homeClient">HomeClient</a>
             @endif
             </li>
             <li>
-                <a class="nav-link" style="color: #003366;" href="#">My profile</a>
+                <a class="nav-link" style="color: #003366;" href="/profile">My profile</a>
             </li>
             <li>
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="#">User Manage</a>
+                <a class="nav-link" style="color: #003366;" href="/userManage">User Manage</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="#">My wallet</a>
+                <a class="nav-link" style="color: #003366;" href="/wallet">My wallet</a>
             @endif
             </li>
             <li>
@@ -46,7 +46,7 @@
         </ul>
     </nav>
 </div> 
-@if (!Auth::guest() && Auth::user()->is_admin)
+
 <!-- <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -76,7 +76,7 @@
     </ul>
 </nav>
 
-<h1 style="margin-left:20px">All the Users</h1>
+<h1 style="margin-left:20px">My profile</h1><span style="margin-left:4px">You can change your profile here if you want.</span>
 
 <!-- will be used to show any messages -->
 @if (Session::has('message'))
@@ -105,7 +105,7 @@
             <td>
 
                 <!-- edit this nerd (uses the edit method found at GET /users/{id}/edit -->
-                <a class="btn btn-small btn-info" href='{{ url("/profile/{$user->id}/edit")}}'>Edit this user</a>
+                <a class="btn btn-small btn-info" href='{{ url("/userManage/{$user->id}/edit")}}'>Edit this user</a>
 
             </td>
         </tr>
@@ -114,5 +114,5 @@
 </table>
 
 </div>
-@endif
+
 @endsection

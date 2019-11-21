@@ -17,19 +17,19 @@
             @endif
             <li class="active">
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="{{ route('homeAdmin') }}">Home</a>
+                <a class="nav-link" style="color: #003366;" href="/homeAdmin">Home</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="{{ route('homeClient') }}">HomeClient</a>
+                <a class="nav-link" style="color: #003366;" href="/homeClient">HomeClient</a>
             @endif
             </li>
             <li>
-                <a class="nav-link" style="color: #003366;" href="{{ route('profile') }}">My profile</a>
+                <a class="nav-link" style="color: #003366;" href="/profile">My profile</a>
             </li>
             <li>
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="{{ route('userManage') }}">User Manage</a>
+                <a class="nav-link" style="color: #003366;" href="/userManage">User Manage</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="{{ route('wallet') }}">My wallet</a>
+                <a class="nav-link" style="color: #003366;" href="/wallet">My wallet</a>
             @endif
             </li>
             <li>
@@ -53,9 +53,9 @@
 
   <thead>
     <th scope="col">ID crpto</th>
-    <th scope="col">Nom de crypto</th>
-    <th scope="col">Symbol de crypto</th>
-    <th  scope="col">Credit</th>
+    <th scope="col">Name of crypto</th>
+    <th scope="col">Symbol of crypto</th>
+    <th scope="col">Credit</th>
     <th scope="col">Rate</th>
   </thead>
   
@@ -66,8 +66,8 @@
       <th scope="col">{{$crypto->id}}</th>
       <th scope="col">{{$crypto->name}}</th>
       <th scope="col">{{$crypto->symbol}}</th>
-      <th scope="col">{{$crypto->credit}}</th>
-      <th scope="col">{{ App\Http\Controllers\HomeController::getRate($crypto->symbol)}} €</th>
+      <th scope="col">{{$crypto->credit}} {{$crypto->symbol}}</th>
+      <th scope="col">1 {{$crypto->symbol}} = {{ App\Http\Controllers\HomeController::getRate($crypto->symbol)}} €</th>
 
       @endforeach
     </tr>

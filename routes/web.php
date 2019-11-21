@@ -17,9 +17,9 @@ Route::get('/', function () {
 
 Auth::routes(); 
 // Authentication Routes...
-Route::get('login', 'Auth\AuthController@showLoginForm');
+/* Route::get('login', 'Auth\AuthController@showLoginForm');
 Route::post('login', 'Auth\AuthController@login');
-Route::get('logout', 'Auth\AuthController@logout');
+Route::get('logout', 'Auth\AuthController@logout'); */
  
 Route::get('/logout', 'Auth\LoginController@logout');
 
@@ -28,8 +28,14 @@ Route::get('/homeClient', 'HomeController@homeclient')->name('homeClient');
 Route::get('/homeAdmin', 'HomeController@homeadmin')->name('homeAdmin'); 
 
 /*Client Side*/
-Route::get('/wallet', 'HomeController@wallet')->name('wallet'); 
+Route::get('/wallet', 'HomeController@wallet')->name('wallet');
+Route::get('/buyCryptos', 'UserClientController@buyCryptos')->name('buyCryptos');
+Route::get('/sellCryptos', 'UserClientController@sellCryptos')->name('sellCryptos');
 
+/*Admin Side*/
+//Route::get('/profile', 'HomeController@profile')->name('profile');
+Route::get('/userManage', 'HomeController@usermanage')->name('userManage'); 
+Route::get('/profile', 'HomeController@profile')->name('profile'); 
 /*Route for admin-side user management*/
 Route::resource('/userManage', 'UserAdminController');
 //Route::resource('/profile', 'AdminProfileController'); 
