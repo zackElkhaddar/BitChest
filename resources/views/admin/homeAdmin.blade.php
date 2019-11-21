@@ -17,19 +17,19 @@
             @endif
             <li class="active">
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="{{ route('homeAdmin') }}">Home</a>
+                <a class="nav-link" style="color: #003366;" href="#">Home</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="{{ route('homeClient') }}">HomeClient</a>
+                <a class="nav-link" style="color: #003366;" href="#">HomeClient</a>
             @endif
             </li>
             <li>
-                <a class="nav-link" style="color: #003366;" href="{{ route('profile') }}">My profile</a>
+                <a class="nav-link" style="color: #003366;" href="#">My profile</a>
             </li>
             <li>
             @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="{{ route('userManage') }}">User Manage</a>
+                <a class="nav-link" style="color: #003366;" href="#">User Manage</a>
             @else
-                <a class="nav-link" style="color: #003366;" href="{{ route('wallet') }}">My wallet</a>
+                <a class="nav-link" style="color: #003366;" href="#">My wallet</a>
             @endif
             </li>
             <li>
@@ -64,73 +64,64 @@
         </div>
     </div>
 </div> -->
-<div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h1>BitChest</h1></div>
-
-                    <div class="panel-body">
-                        <div class="col-md-12 ">
-                            @foreach($users as $user)
-
-                                
-                                <legend>Modification des données</legend>
-
-                                 <div class="form-group">
-                                    <label class="col-md-4 control-label" for="name">Name</label>
-                                    <div class="col-md-5">
-                                        <input id="name" name="name" class="form-control input-md" type="text" value="{{ $user->name }}">
-                                        @if ($errors->has('Name'))
-                                            <p class="help-block">{{ $errors->first('Name') }}</p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="email">Email</label>
-                                            <div class="col-md-5">
-                                                <input id="email" name="email" class="form-control input-md" type="email" value="{{ $user->email }}">
-                                                 @if ($errors->has('Email'))
-                                                    <p class="help-block">{{ $errors->first('Email') }}</p>
-                                                @endif
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="selectbasic">Statut</label>
-                                            <div class="col-md-5">
-                                                <select id="selectbasic" name="is_admin" class="form-control">
-                                                    <option selected> 
-                                                       
-                                                    </option>
-                                                    <option value="1"></option>
-                                                    <option value="0"></option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <!-- Actions -->
-                                        <div class="form-group">
-                                            <label class="col-md-4 control-label" for="validation"></label>
-                                            <div class="col-md-8">
-                                                <button id="validation" type="submit" name="validation" class="btn btn-success">Validate</button>
-                                                <button id="cancel" name="cancel" class="btn btn-danger">Cancel</button>
-                                  
-
-                                            </div>
-                                        </div>
-                                @endforeach
-                    
-
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="container AdminContainer col-md-offset-2" style="margin-left:234px">
+<nav class="navbar navbar-inverse" style="height:93px">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#">User Alert</a>
     </div>
+    <ul class="nav navbar-nav">
+        <li><a href="#">View All Users</a></li>
+        <li><a href="{{ URL::to('homeAdmin/create') }}">Create a User</a>
+    </ul>
+</nav>
+
+<h1 style="margin-left:20px">All the Users</h1>
+
+<!-- will be used to show any messages -->
+@if (Session::has('message'))
+    <div class="alert alert-info">{{ Session::get('message') }}</div>
+@endif
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <td>ID</td>
+            <td>Name</td>
+            <td>Email</td>
+            <td>Status Level</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach($users->all() as $user)
+        <tr>
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->is_admin }}</td>
+
+            <!-- we will also add show, edit, and delete buttons -->
+            <td>
+
+                <!-- delete the nerd (uses the destroy method DESTROY /users/{id} -->
+                <!-- we will add this later since its a little more complicated than the other two buttons -->
+                {{ Form::open(array('url' => 'homeAdmin/' . $user->id, 'class' => 'col-md-4')) }}
+                    {{ Form::hidden('_method', 'DELETE') }}
+                    {{ Form::submit('Delete this user', array('class' => 'btn btn-warning')) }}
+                {{ Form::close() }}
+                <!-- show the nerd (uses the show method found at GET /users/{id} -->
+                <a class="btn btn-small btn-success" href='{{ url("/homeAdmin/{$user->id}")}}'>Show this user</a>
+
+                <!-- edit this nerd (uses the edit method found at GET /users/{id}/edit -->
+                <a class="btn btn-small btn-info" href='{{ url("/homeAdmin/{$user->id}/edit")}}'>Edit this user</a>
+
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
+
+</div>
 
 @endif
 @endsection

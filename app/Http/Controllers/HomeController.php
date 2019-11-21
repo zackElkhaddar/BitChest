@@ -23,10 +23,9 @@ class HomeController extends Controller
      * @return void
      */
     public function __construct()
-    {header('Access-Control-Allow-Origin : *');
-        //header('Access-Control-Allow-Headers : Content-type, Origin');
-       /*  header('Access-Control-Allow-Origin: *'); */
-        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With,  X-Auth-Token, Authorization, Content-Type, Accept, Access-Control-Request-Method");
+    {   
+        header('Access-Control-Allow-Origin : *');
+        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, X-Auth-Token, Authorization, Content-Type, Accept, Access-Control-Request-Method");
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         $this->middleware('auth');
     }
@@ -52,21 +51,21 @@ class HomeController extends Controller
     public function update()
     {
         $rules = array(
-            'name'       => 'required',
-            'email'      => 'required|email',
-            'password' => 'required'
+            'name' => 'required',
+            'email' => 'required|email',
+            'is_admin' => 'required'
         );
         $validator = Validator::make(Input::all(), $rules);
         
         if ($validator->fails()) {
             return Redirect::to('admin.homeAdmin')
                 ->withErrors($validator)
-                ->withInput(Input::except('password'));
+                ->withInput(Input::except('is_admin'));
         } else {
             $user = User::where(Auth::user()->id);
             $user->name = Input::get('name');
             $user->email = Input::get('email');
-            $user->password = Input::get('password');
+            $user->is_admin = Input::get('is_admin');
             $user->save();
             Session::flash('flash_message', 'Data of' . $user->name . 'modified succefully');
          
