@@ -11,7 +11,7 @@ class WalletsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Generate currency and credit for users
         DB::Table('wallets')->insert(array([
             'user_id' => 1,
             'currency_id' => rand(1, 11),

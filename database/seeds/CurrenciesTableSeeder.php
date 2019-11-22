@@ -11,7 +11,7 @@ class CurrenciesTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Seeder to generate names and symbols currencies
         DB::Table('currencies')->insert(array([
             'name' => 'Bitcoin',
             'symbol' => 'BTC',

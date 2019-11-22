@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use App\User;
+use App\Role;
 class LoginController extends Controller
 {
     /*
@@ -37,4 +40,29 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+  /*   protected function redirectTo()
+{
+    if(Auth::user()->hasRole('is_admin')){
+        return 'homeAdmin';
+    }       
+} */
+protected function redirectTo()
+{
+    if(\Auth::guard()->check() && Auth::user()->is_admin){
+      $this->redirectTo = '/homeAdmin';
+      return $this->redirectTo;
+    }else{
+        return '/homeClient';
+    }
+}
+    /*  public function redirectTo()
+    {
+        if(!Auth::guest() && Auth::user()->is_admin){
+            return Redirect::to('homeAdmin');
+        }else{
+            return redirect('homeClient');
+        }
+
+    }  */
 }

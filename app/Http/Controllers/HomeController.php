@@ -73,6 +73,7 @@ class HomeController extends Controller
          }
     }
 
+    //Function to transfer EURO to Cryptos coins and vice versa
     public function transfer( $quantity ,$isEuro ){
         if($isEuro)
         return $quantity/$this->getRate();
@@ -80,74 +81,33 @@ class HomeController extends Controller
         return $quantity*$this->getRate();
     }
 
-    public static function getRate($cryptoType){
+    //Function to get the rate in "EUR" of cryptos coins in real-time via online API
+    public static function getRate($cryptoType)
+    {
         if($cryptoType == 'EUR'){
-        return 1;}
-        else{
+
+        return 1;
+
+        }else{
+
         $client = new Client(['base_uri' => 'http://api.coinlayer.com/']);  
-        $response = $client->request('GET', 'live?access_key=ae4edf312c3f0f934c23c55551610efc&target=EUR'); 
+        $response = $client->request('GET', 'live?access_key=db7fd0593e5c84735982ae5ad9140109&target=EUR'); 
         $body = $response->getBody();
         $content =$body->getContents();
         $arrs = json_decode($content,TRUE);
         $arrs = $arrs['rates'][$cryptoType];
+
         return $arrs;
     }
         
     }
 
+    //Function to display profile for this authenticated user's in admin side and client side
     public function profile()
     {
         $users = User::where('id', Auth::id())->get();
         //$users = User::all();
         return view('admin.profile',compact('users'));
-    }
-
-    public function storeAdminProfile(Request $request)
-    {
-        //
-        // validate
-        $rules = array(
-            'name'       => 'required',
-            'email'      => 'required|email',
-            'is_admin' => 'required|numeric'
-        );
-        $validator = Validator::make(Input::all(), $rules);
-
-        // process the login
-        if ($validator->fails()) {
-            return Redirect::to('profile/create')
-                ->withErrors($validator)
-                ->withInput(Input::except('password'));
-        } else {
-            // store
-            $user = new User;
-
-            $user->name=$request->input('name');
-            $user->email=$request->input('email');
-            $user->is_admin=$request->input('is_admin');
-            $user->save();
-
-            // redirect
-            Session::flash('message', 'Successfully created user!');
-            return Redirect::to('profile');
-        }
-    }
-
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editAdminProfile($id)
-    {
-        //
-        // get the user
-        $user = User::find($id);
-
-        // show the edit form and pass the user
-        return view('admin.editAdminProfile',compact('user'));
     }
 
     /**
@@ -159,9 +119,7 @@ class HomeController extends Controller
      */
     public function updateAdminProfile(Request $request, $id)
     {
-        //
         // validate
-        
         $rules = array(
             'name'       => 'required',
             'email'      => 'required|email',
@@ -194,68 +152,113 @@ class HomeController extends Controller
     public function usermanage()
     {
         $users = User::all();
+
         return view('admin.userManage',compact('users'));
     }
 
+    //Function to display ONLY cryptos coins inside the user's wallets contents 
     public function wallet()
     {   
         $amounts = $this->getRate('ETH');
         $cryptos = DB::table('wallets')
-        ->join('users', 'users.id', '=', 'wallets.user_id')
-        ->join('currencies', 'currencies.id', '=', 'wallets.currency_id')
-        ->select('currencies.id','wallets.credit','currencies.name','currencies.symbol')
-        ->where('users.id', Auth::user()->id)
-        ->get();
+                        ->join('users', 'users.id', '=', 'wallets.user_id')
+                        ->join('currencies', 'currencies.id', '=', 'wallets.currency_id')
+                        ->select('currencies.id','wallets.credit','currencies.name','currencies.symbol')
+                        ->where('users.id', Auth::user()->id)
+                        ->get();
+
         return view('customer.wallet',compact('cryptos','amounts'));
     }
 
+    //Function to display all cryptos coins in client side
     public function homeclient()
     {   
-        
         $amounts = $this->getRate('ETH');
         $cryptos = DB::table('currencies')
-        ->select('currencies.id','currencies.name','currencies.symbol')
-        ->where('currencies.symbol','!=','EUR')
-        ->get();
+                        ->select('currencies.id','currencies.name','currencies.symbol')
+                        ->where('currencies.symbol','!=','EUR')
+                        ->get();
+
         return view('customer.homeClient',compact('cryptos','amounts'));
     }
 
+    //Function to display all cryptos coins in admin side
     public function homeadmin()
     {   
-        
         $amounts = $this->getRate('ETH');
         $cryptos = DB::table('currencies')
-        ->select('currencies.id','currencies.name','currencies.symbol')
-        ->get();
+                        ->select('currencies.id','currencies.name','currencies.symbol')
+                        ->get();
+
         return view('admin.homeAdmin',compact('cryptos','amounts'));
     }
 
+    //Function to sell all contents of wallet user
     public function sell(Request $request){
+
        $credit = $request->input('credit');
        $currency_id = $request->input('currency_id');
        $iud = $request->input('iud');
+
        $rate = $this->getRate($currency_id);
+
        $moneyEuros = DB::table('wallets')
-       ->join('users', 'users.id', '=', 'wallets.user_id')
-       ->join('currencies', 'currencies.id', '=', 'wallets.currency_id')
-       ->select('wallets.id AS uid','currencies.id','wallets.credit','currencies.name','currencies.symbol')
-       ->where('users.id', Auth::user()->id)
-       ->where('currency_id',11)
-       ->first();
+                    ->join('users', 'users.id', '=', 'wallets.user_id')
+                    ->join('currencies', 'currencies.id', '=', 'wallets.currency_id')
+                    ->select('wallets.id AS uid','currencies.id','wallets.credit','currencies.name','currencies.symbol')
+                    ->where('users.id', Auth::user()->id)
+                    ->where('currency_id',11)
+                    ->first();
 
        if(isset($moneyEuros)){
+
         Wallet::where('id', $moneyEuros->uid)
-         ->update(['credit' => $moneyEuros->credit+($rate * $credit)]);
-         $crypto = Wallet::find($iud);
-         $crypto->delete();
+                ->update(['credit' => $moneyEuros->credit+($rate * $credit)]); // Or Use above Transfer function 
+         
+        $crypto = Wallet::find($iud);
+        $crypto->delete();
+        }else{
+            $crypto = new Wallet;
+
+            $crypto->currency_id= 11;
+            $crypto->credit= $credit;
+            $crypto->user_id = Auth::user()->id;
+            $crypto->save(); 
+            
+            $crypto = Wallet::find($iud);
+            $crypto->delete();   
        }
-       else {
-           DB::table('wallets')
-            ->insert(array(
-            array('currency_id'=>'11'),
-            array('credit'=>$credit),            
-        ))->where('user_id', Auth::user()->id);
-       }
-       return Redirect::to('sellCryptos');
+      // Session::flash('message', 'You have selling your wallet successufly!');
+       return Redirect::to('wallet')->with('status', 'You selling your wallet successufly!');
     }
+
+     public function buy(Request $request){
+        $credit = $request->input('credit');
+        $currency_id = $request->input('currency_id');
+        $iud = $request->input('iud');
+        $rate = $this->getRate($currency_id);
+        $moneyCrypto = DB::table('wallets')
+        ->join('users', 'users.id', '=', 'wallets.user_id')
+        ->join('currencies', 'currencies.id', '=', 'wallets.currency_id')
+        ->select('wallets.id AS uid','currencies.id','wallets.credit','currencies.name','currencies.symbol')
+        ->where('users.id', Auth::user()->id)
+        ->where('currency_id',11)
+        ->first();
+ 
+        if(isset($moneyCrypto)){
+         Wallet::where('id', $moneyCrypto->uid)
+          ->update(['credit' => $moneyCrypto->credit+($credit / $rate)]);
+          $crypto = Wallet::find($iud);
+          $crypto->delete();
+        }
+        else {
+            $crypto = new Wallet;
+
+       // $crypto->name=$request->input('name');
+        $crypto->currency_id=$request->input('currency_id');
+        $crypto->credit=$request->input('credit');
+        $crypto->save();
+        }
+        return Redirect::to('buyCryptos')->with('status', 'You buying successufly! Check your wallet');
+     } 
 }

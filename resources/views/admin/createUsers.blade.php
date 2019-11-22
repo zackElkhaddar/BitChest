@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+@include('admin.layouts.partials_admin.sidebar-admin')
 <head>
     <title>Create Users Form</title>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
@@ -9,15 +9,7 @@
 <body>
 <div class="container">
 
-<nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">User Alert</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="{{ URL::to('homeAdmin') }}">View All Users</a></li>
-        <li><a href="{{ URL::to('homeAdmin/create') }}">Create a User</a>
-    </ul>
-</nav>
+@include('admin.layouts.partials_admin.navbar-admin')
 
 <h1>Create a user</h1>
 

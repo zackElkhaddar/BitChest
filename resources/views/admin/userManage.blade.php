@@ -1,52 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="wrapper">
+@include('admin.layouts.partials_admin.sidebar-admin')
 
-    <!-- Sidebar -->
-    <nav id="sidebar">
-    <div class="sidebar-header">
-            <h3 class="title-sidebar">BitChest</h3>
-        </div>
-
-        <ul class="list-unstyled components">
-            @if (!Auth::guest() && Auth::user()->is_admin)
-                <p class="user-status">Administrateur</p>
-            @else
-                <p class="user-status">Client</p>
-            @endif
-            <li class="active">
-            @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="/homeAdmin">Home</a>
-            @else
-                <a class="nav-link" style="color: #003366;" href="/homeClient">HomeClient</a>
-            @endif
-            </li>
-            <li>
-                <a class="nav-link" style="color: #003366;" href="/profile">My profile</a>
-            </li>
-            <li>
-            @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="/userManage">User Manage</a>
-            @else
-                <a class="nav-link" style="color: #003366;" href="/wallet">My wallet</a>
-            @endif
-            </li>
-            <li>
-            <a class="nav-link" style="color: #003366;" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Déconnexion
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-            </li>
-        </ul>
-    </nav>
-</div> 
-@if (!Auth::guest() && Auth::user()->is_admin)
 <!-- <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -65,15 +21,7 @@
     </div>
 </div> -->
 <div class="container AdminContainer col-md-offset-2" style="margin-left:234px">
-<nav class="navbar navbar-inverse" style="height:93px">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="#">User Alert</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="#">View All Users</a></li>
-        <li><a href="{{ URL::to('userManage/create') }}">Create a User</a>
-    </ul>
-</nav>
+@include('admin.layouts.partials_admin.navbar-admin')
 
 <h1 style="margin-left:20px">All the Users</h1>
 
@@ -123,5 +71,5 @@
 
 </div>
 
-@endif
+
 @endsection

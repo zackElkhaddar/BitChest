@@ -1,54 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="wrapper">
-
-    <!-- Sidebar -->
-    <nav id="sidebar">
-    <div class="sidebar-header">
-            <h3 class="title-sidebar">BitChest</h3>
-        </div>
-
-        <ul class="list-unstyled components">
-            @if (!Auth::guest() && Auth::user()->is_admin)
-                <p class="user-status">Administrateur</p>
-            @else
-                <p class="user-status">Client</p>
-            @endif
-            <li class="active">
-            @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="/homeAdmin">Home</a>
-            @else
-                <a class="nav-link" style="color: #003366;" href="/homeClient">HomeClient</a>
-            @endif
-            </li>
-            <li>
-                <a class="nav-link" style="color: #003366;" href="/profile">My profile</a>
-            </li>
-            <li>
-            @if (!Auth::guest() && Auth::user()->is_admin)
-                <a class="nav-link" style="color: #003366;" href="/userManage">User Manage</a>
-            @else
-                <a class="nav-link" style="color: #003366;" href="/wallet">My wallet</a>
-            @endif
-            </li>
-            <li>
-            <a class="nav-link" style="color: #003366;" href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            Déconnexion
-                                        </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                            {{ csrf_field() }}
-                                        </form>
-            </li>
-        </ul>
-    </nav>
-
-
-</div> 
+@include('admin.layouts.partials_admin.sidebar-admin')
+<div class="container">
 <section class="table-responsive-md">
+@include('customer.layouts.partials_customer.navbar-customer')
+
+@if (session('status'))
+                        <div class="alert alert-success">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+<h2 style="margin-left:3px">Contents of my wallet</h2>
 <table class="table table-striped table-bordered">
 
   <thead>

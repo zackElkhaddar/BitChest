@@ -11,7 +11,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+        //Generate users by seeders (One super Admin and other clients that we can change their status)
         $users = factory(App\User::class, 3)->create();
 
             DB::Table('users')->insert(array([
