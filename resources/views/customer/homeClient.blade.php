@@ -105,6 +105,7 @@
             <td>
                 <a class="btn btn-small btn-success" href="/buyCryptos">Buy this cryptos</a>
                 <a class="btn btn-small btn-info" href="/sellCryptos">Sell this cryptos</a>
+                @endif
             </td>
         </tr>
     @endforeach

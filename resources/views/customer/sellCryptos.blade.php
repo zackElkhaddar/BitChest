@@ -71,7 +71,7 @@
 </head>
 <body>
 <div class="container" style="margin-left:235px">
-<nav class="navbar navbar-inverse" style="height:88px">
+<nav class="navbar navbar-inverse" style="height:92px">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">Cryptos Alert</a>
     </div>
@@ -82,3 +82,53 @@
 </nav>
 
 <h2 style="margin-left:3px">Selling Cryptos coins</h2>
+<table class="table table-striped table-bordered"style="margin-left:3px"> 
+    <thead>
+        <tr>
+           
+            <td>Credit</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+@foreach($amount as $key => $value)
+
+            <form class="form-horizontal" method="POST" action="{{url('/sellCryptos2')}}">
+                
+                {{csrf_field()}}
+                <!--requet pour dire que tous les champs doivent etre rempli-->
+                @if(count($errors ) > 0)
+                @foreach($errors->all() as $error )
+                <div class="alert alert-danger">
+                  {{$error}}
+                </div>
+                @endforeach
+                @endif
+                <!--fin-->
+                
+                <fieldset>
+                  <!-- <legend>We fashion</legend> -->
+                  <div class="form-group">
+                  <tr>
+            <td>{{ $value->credit }} {{ $value->symbol }} </td>
+                    <div class="col-md-6">
+                      <input class="form-control" id="credit" name="credit" type="hidden" value="{{$value->credit}}"placeholder="credit"><br>
+                    </div>
+                    <div class="col-md-6">
+                      <input class="form-control" id="currency_id" name="currency_id" type="hidden" value="{{$value->symbol}}"placeholder="credit"><br>
+                    </div>
+                    <div class="col-md-6">
+                      <input class="form-control" id="iud" name="iud" type="hidden" value="{{$value->iud}}"placeholder="credit"><br>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-offset-4 ">
+                    <td>  <button type="submit" name="submit" class="btn btn-success">Buy</button></td>
+ 
+                    </div>
+                  </div>
+                </fieldset>
+              </form>
+            
+        </tr>
+@endforeach

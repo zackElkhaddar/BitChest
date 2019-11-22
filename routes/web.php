@@ -29,9 +29,9 @@ Route::get('/homeAdmin', 'HomeController@homeadmin')->name('homeAdmin');
 
 /*Client Side*/
 Route::get('/wallet', 'HomeController@wallet')->name('wallet');
-Route::get('/buyCryptos', 'UserClientController@buyCryptos')->name('buyCryptos');
-Route::get('/sellCryptos', 'UserClientController@sellCryptos')->name('sellCryptos');
-
+Route::get('/buyCryptos', 'BuyController@buyCryptos')->name('buyCryptos');
+Route::get('/sellCryptos', 'SellController@sellCryptos')->name('sellCryptos');
+Route::post('/sellCryptos2', 'HomeController@buy')->name('buy');
 /*Admin Side*/
 //Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::get('/userManage', 'HomeController@usermanage')->name('userManage'); 

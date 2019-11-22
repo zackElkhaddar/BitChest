@@ -229,4 +229,33 @@ class HomeController extends Controller
         ->get();
         return view('admin.homeAdmin',compact('cryptos','amounts'));
     }
+
+    public function buy(Request $request){
+       $credit = $request->input('credit');
+       $currency_id = $request->input('currency_id');
+       $iud = $request->input('iud');
+       $rate = $this->getRate($currency_id);
+       $moneyEuros = DB::table('wallets')
+       ->join('users', 'users.id', '=', 'wallets.user_id')
+       ->join('currencies', 'currencies.id', '=', 'wallets.currency_id')
+       ->select('wallets.id AS uid','currencies.id','wallets.credit','currencies.name','currencies.symbol')
+       ->where('users.id', Auth::user()->id)
+       ->where('currency_id',11)
+       ->first();
+
+       if(isset($moneyEuros)){
+        Wallet::where('id', $moneyEuros->uid)
+         ->update(['credit' => $moneyEuros->credit+($rate * $credit)]);
+         $crypto = Wallet::find($iud);
+         $crypto->delete();
+       }
+       else {
+           DB::table('wallets')
+            ->insert(array(
+            array('currency_id'=>'11'),
+            array('credit'=>$credit),            
+        ))->where('user_id', Auth::user()->id);
+       }
+       return Redirect::to('sellCryptos');
+    }
 }

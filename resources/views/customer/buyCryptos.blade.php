@@ -70,7 +70,7 @@
 </head>
 <body>
 <div class="container" style="margin-left:235px">
-<nav class="navbar navbar-inverse" style="height:88px">
+<nav class="navbar navbar-inverse" style="height:92px">
     <div class="navbar-header">
         <a class="navbar-brand" href="#">Cryptos Alert</a>
     </div>
