@@ -91,7 +91,7 @@ class HomeController extends Controller
         }else{
 
         $client = new Client(['base_uri' => 'http://api.coinlayer.com/']);  
-        $response = $client->request('GET', 'live?access_key=db7fd0593e5c84735982ae5ad9140109&target=EUR'); 
+        $response = $client->request('GET', 'live?access_key=bd309d937fcdbf58df694796fe3c43e6&target=EUR'); 
         $body = $response->getBody();
         $content =$body->getContents();
         $arrs = json_decode($content,TRUE);

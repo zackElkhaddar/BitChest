@@ -1,0 +1,9 @@
+Note pour l'examinateur: 
+
+J'ai utilisé une API en ligne sur le site https://coinlayer.com/ qui me récupère les différentes cryptos monnaies en temps réel. le problème que j'ai rencontré c'est que ce site offre gratuitement des api avec des fonctionnalités limités, par exemple la fonctionnalité qui me récupère les rates des 30 derniers jours existe mais elle est payante.. aussi, ils proposent 500 requête par mois donc pour continuer les tests faudra renouveler l'inscription sur le lien ci-dessus et mettre a jour la clé de l'api dans HomeController fonction getRate().
+
+J'ai voulu aussi utilisé angular 7 en front mais j'ai eu un souci d'appel des fontions du backend (dans le network j'ai toujours option et pas de post)
+
+je n'ai pas fais les affichages graphiques de cours mais j'ai suivi le conseil sur le brief de ne jamais être trop ambitieux et faire fonctionné le maximum correctement.
+
+Merci.

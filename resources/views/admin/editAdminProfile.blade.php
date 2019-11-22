@@ -25,8 +25,8 @@
                                 </div>
 
                                 <div class="form-group">
-                                    {{ Form::label('is_status', 'Status user Level') }}
-                                    {{ Form::select('is_status', array('0' => 'Client', '1' => 'Admin'), null, array('class' => 'form-control')) }}
+                                    {{ Form::label('is_admin', 'Status user Level') }}
+                                    {{ Form::select('is_admin', array('0' => 'Client', '1' => 'Admin'), null, array('class' => 'form-control')) }}
                                 </div>
 
                                 {{ Form::submit('Edit the user!', array('class' => 'btn btn-primary')) }}

@@ -8,7 +8,7 @@
             <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
         </head>
         <body>
-            <div class="container">
+            <div class="container" style="margin-left:235px">
              @include('admin.layouts.partials_admin.navbar-admin')
                 <h1>Showing {{ $user->name }}</h1>
                     <div class="jumbotron text-center">
