@@ -123,7 +123,7 @@
                   </div>
                   <div class="form-group">
                     <div class="col-md-offset-4 ">
-                    <td>  <button type="submit" name="submit" class="btn btn-success">Buy</button></td>
+                    <td>  <button type="submit" name="submit" class="btn btn-success">Sell</button></td>
  
                     </div>
                   </div>

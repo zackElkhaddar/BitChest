@@ -230,7 +230,7 @@ class HomeController extends Controller
         return view('admin.homeAdmin',compact('cryptos','amounts'));
     }
 
-    public function buy(Request $request){
+    public function sell(Request $request){
        $credit = $request->input('credit');
        $currency_id = $request->input('currency_id');
        $iud = $request->input('iud');

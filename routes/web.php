@@ -31,7 +31,7 @@ Route::get('/homeAdmin', 'HomeController@homeadmin')->name('homeAdmin');
 Route::get('/wallet', 'HomeController@wallet')->name('wallet');
 Route::get('/buyCryptos', 'BuyController@buyCryptos')->name('buyCryptos');
 Route::get('/sellCryptos', 'SellController@sellCryptos')->name('sellCryptos');
-Route::post('/sellCryptos2', 'HomeController@buy')->name('buy');
+Route::post('/sellCryptos2', 'HomeController@sell')->name('sell');
 /*Admin Side*/
 //Route::get('/profile', 'HomeController@profile')->name('profile');
 Route::get('/userManage', 'HomeController@usermanage')->name('userManage'); 
